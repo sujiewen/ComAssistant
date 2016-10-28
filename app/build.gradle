@@ -1,0 +1,47 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 15
+    buildToolsVersion "24.0.2"
+
+    defaultConfig {
+        applicationId "com.bjw.ComAssistant"
+        minSdkVersion 15
+        targetSdkVersion 24
+//        ndk {
+//            moduleName "serial_port"
+//            ldLibs "log"
+//            abiFilters "armeabi", "armeabi-v7a", "x86"
+//        }
+
+        externalNativeBuild {
+            cmake {
+                arguments '-DANDROID_PLATFORM=android-22',
+                        '-DANDROID_TOOLCHAIN=clang'
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "src/main/jni/CMakeLists.txt"
+        }
+    }
+}
+
+
+android.lintOptions {
+    abortOnError  = false
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+
+}
